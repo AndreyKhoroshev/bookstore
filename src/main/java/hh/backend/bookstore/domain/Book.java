@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 @Entity
 
 public class Book {
- @Id
- @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String title;
@@ -21,7 +21,7 @@ public class Book {
     public Book() {
     }
 
-    // Getterit ja Setterit 
+    // Getterit ja Setterit
     public String getTitle() {
         return title;
     }
@@ -70,4 +70,9 @@ public class Book {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Book [id=" + id + ", title=" + title + ", author=" + author +
+                ", isbn=" + isbn + ", publicationYear=" + publicationYear + "]";
+    }
 }
