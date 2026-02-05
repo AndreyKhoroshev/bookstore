@@ -43,7 +43,16 @@ public class BookController {
    @PostMapping(value = "/save")
    public String save(Book book){
         repository.save(book);
-        return "redirect:booklist";
+        return "redirect:/booklist";
+        }
+// EDIT BOOK
+        @GetMapping("/edit/{id}")
+    public String editBook(@PathVariable("id") Long id, Model model) {
+        Book book = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
+        
+        model.addAttribute("book", book);
+        return "addbook";
    }
 
     }
