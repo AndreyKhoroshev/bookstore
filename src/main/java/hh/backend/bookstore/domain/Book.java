@@ -7,20 +7,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-@Entity
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@Entity
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String title;  
+    private String title;
     private String author;
     private int publicationYear;
     private String isbn;
     private double price;
 
-      public Book() {
+    @ManyToOne
+    @JoinColumn(name = "categoryid")
+    @JsonIgnoreProperties("books")
+    private Category category;
+
+    // Constructors
+
+    public Book() {
     }
 
     public Book(String title, String author, int publicationYear, String isbn, double price, Category category) {
@@ -29,15 +38,19 @@ public class Book {
         this.publicationYear = publicationYear;
         this.isbn = isbn;
         this.price = price;
-        this.category = category; 
+        this.category = category;
     }
 
-    @ManyToOne
-@JoinColumn(name = "categoryid")
-private Category category;
+    // Getters and Setters
 
+    public long getId() {
+        return id;
+    }
 
-    // Getterit ja Setterit
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -78,26 +91,23 @@ private Category category;
         this.price = price;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public Category getCategory() {
-    return category;
-}
+        return category;
+    }
 
-public void setCategory(Category category) {
-    this.category = category;
-}
-
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     @Override
     public String toString() {
-        return "Book [id=" + id + ", title=" + title + ", author=" + author +
-                ", isbn=" + isbn + ", publicationYear=" + publicationYear + "]";
+        return "Book [id=" + id +
+                ", title=" + title +
+                ", author=" + author +
+                ", publicationYear=" + publicationYear +
+                ", isbn=" + isbn +
+                ", price=" + price +
+                ", category=" + (category != null ? category.getName() : "null") +
+                "]";
     }
 }

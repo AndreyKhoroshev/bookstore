@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import hh.backend.bookstore.domain.Book;
 import hh.backend.bookstore.domain.BookRepository;
+import hh.backend.bookstore.domain.CategoryRepository;
 
 import org.springframework.ui.Model;
 
@@ -20,6 +21,9 @@ public class BookController {
 
     @Autowired
     private BookRepository repository;
+
+    @Autowired
+private CategoryRepository crepository;
 
     @GetMapping("/booklist")
     public String bookList(Model model) {
@@ -34,11 +38,12 @@ public class BookController {
         return "redirect:/booklist";
     }
    // ADD BOOK 
-    @GetMapping(value = "/add")
-    public String addBook(Model model) {
-        model.addAttribute("book", new Book());
-        return "addbook";
-    }
+@GetMapping("/add")
+public String addBook(Model model) {
+    model.addAttribute("book", new Book());
+    model.addAttribute("categories", crepository.findAll());
+    return "addbook";
+}
     // SAVE BOOK
    @PostMapping(value = "/save")
    public String save(Book book){

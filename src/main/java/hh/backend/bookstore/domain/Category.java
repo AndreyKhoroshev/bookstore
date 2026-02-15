@@ -1,6 +1,10 @@
 package hh.backend.bookstore.domain;
 
+import java.util.List;
+
 import jakarta.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Category {
@@ -11,11 +15,19 @@ public class Category {
 
     private String name;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @JsonIgnore
+    private List<Book> books;
+
+    // Constructors
+
     public Category() {}
 
     public Category(String name) {
         this.name = name;
     }
+
+    // Getters and Setters
 
     public Long getCategoryid() {
         return categoryid;
@@ -31,6 +43,14 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     @Override
