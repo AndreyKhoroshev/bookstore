@@ -15,9 +15,9 @@ public class Category {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    @JsonIgnore
-    private List<Book> books;
+  @OneToMany(mappedBy = "category")
+@JsonIgnore
+private List<Book> books;
 
     // Constructors
 
